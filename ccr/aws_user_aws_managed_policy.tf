@@ -1,5 +1,5 @@
 resource "wiz_cloud_configuration_rule" "aws_user_aws_managed_policy" {
-  name                     = "JTB75 - IAM users with AWS managed policies attached"
+  name                     = "${var.prefix} - IAM users with AWS managed policies attached"
   description              = "Identifies IAM users with AWS managed policies attached. AWS managed policies are overly permissive and users should have customer-managed policies scoped to their specific needs."
   target_native_types      = ["user"]
   severity                 = "HIGH"

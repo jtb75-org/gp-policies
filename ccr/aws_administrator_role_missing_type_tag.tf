@@ -1,5 +1,5 @@
 resource "wiz_cloud_configuration_rule" "aws_administrator_role_missing_type_tag" {
-  name                     = "JTB75 - Administrator role missing type:support tag"
+  name                     = "${var.prefix} - Administrator role missing type:support tag"
   description              = "Identifies the Administrator IAM role when it is missing a type:support tag."
   target_native_types      = ["role"]
   severity                 = "HIGH"

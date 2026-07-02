@@ -1,5 +1,5 @@
 resource "wiz_cloud_configuration_rule" "aws_kms_key_expiration" {
-  name                     = "JTB75 - KMS imported key material expiring soon"
+  name                     = "${var.prefix} - KMS imported key material expiring soon"
   description              = "Identifies KMS keys with imported key material (Origin: EXTERNAL) that will expire within 5 days. Keys without an expiration date are skipped."
   target_native_types      = ["encryptionKey"]
   severity                 = "HIGH"

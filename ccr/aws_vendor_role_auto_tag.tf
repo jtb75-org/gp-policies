@@ -1,5 +1,5 @@
 resource "wiz_cloud_configuration_rule" "aws_vendor_role_auto_tag" {
-  name                     = "JTB75 - Vendor roles missing type:vendor tag based on trust relationship"
+  name                     = "${var.prefix} - Vendor roles missing type:vendor tag based on trust relationship"
   description              = "Identifies IAM roles that trust accounts in the trusted external accounts list but are missing a type:vendor tag."
   target_native_types      = ["role"]
   severity                 = "INFORMATIONAL"

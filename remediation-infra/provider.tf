@@ -9,7 +9,6 @@ terraform {
   backend "s3" {
     key            = "remediation-infra/terraform.tfstate"
     region         = "us-east-1"
-    dynamodb_table = "jtb75-terraform-locks"
     encrypt        = true
   }
 }

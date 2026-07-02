@@ -1,5 +1,5 @@
 resource "wiz_cloud_configuration_rule" "aws_vendor_access_key_older_than_55_days" {
-  name                     = "JTB75 - Vendor access keys approaching 60-day rotation limit (55 days)"
+  name                     = "${var.prefix} - Vendor access keys approaching 60-day rotation limit (55 days)"
   description              = "Identifies AWS IAM users tagged as type=vendor with active access keys that have not been rotated in the last 55 days."
   target_native_types      = ["user"]
   severity                 = "INFORMATIONAL"

@@ -1,5 +1,5 @@
 resource "wiz_cloud_configuration_rule" "aws_support_role_missing_type_tag" {
-  name                     = "JTB75 - Support roles must have a valid type tag"
+  name                     = "${var.prefix} - Support roles must have a valid type tag"
   description              = "Identifies IAM roles matching known support role names that are missing a type tag or have an unrecognized type tag value."
   target_native_types      = ["role"]
   severity                 = "HIGH"

@@ -1,5 +1,5 @@
 resource "wiz_cloud_configuration_rule" "aws_user_access_key_older_than_25_days" {
-  name                     = "JTB75 - User access keys approaching 30-day rotation limit (25 days)"
+  name                     = "${var.prefix} - User access keys approaching 30-day rotation limit (25 days)"
   description              = "Identifies AWS IAM users (human) with active access keys that have not been rotated in the last 25 days."
   target_native_types      = ["user"]
   severity                 = "INFORMATIONAL"

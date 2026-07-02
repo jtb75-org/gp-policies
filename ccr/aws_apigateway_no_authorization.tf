@@ -1,5 +1,5 @@
 resource "wiz_cloud_configuration_rule" "aws_apigateway_no_authorization" {
-  name                     = "JTB75 - API Gateway methods without authorization"
+  name                     = "${var.prefix} - API Gateway methods without authorization"
   description              = "Identifies API Gateway deployments with methods that have no authorization configured and are missing the authentication:kochid exemption tag."
   target_native_types      = ["apiGateway"]
   severity                 = "HIGH"

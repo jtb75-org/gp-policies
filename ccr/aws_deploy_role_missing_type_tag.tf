@@ -1,5 +1,5 @@
 resource "wiz_cloud_configuration_rule" "aws_deploy_role_missing_type_tag" {
-  name                     = "JTB75 - Deploy roles missing type:deployment tag"
+  name                     = "${var.prefix} - Deploy roles missing type:deployment tag"
   description              = "Identifies IAM roles with 'deploy-' in their name that are missing a type:deployment tag."
   target_native_types      = ["role"]
   severity                 = "HIGH"

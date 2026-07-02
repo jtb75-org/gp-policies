@@ -1,5 +1,5 @@
 resource "wiz_cloud_configuration_rule" "aws_snapshot_untrusted_sharing" {
-  name                     = "JTB75 - EC2 snapshots shared with untrusted accounts"
+  name                     = "${var.prefix} - EC2 snapshots shared with untrusted accounts"
   description              = "Identifies EC2 snapshots shared with AWS accounts not in the organization or trusted accounts list."
   target_native_types      = ["ec2#encryptedsnapshot", "ec2#unencryptedsnapshot"]
   severity                 = "HIGH"

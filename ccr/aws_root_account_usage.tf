@@ -1,5 +1,5 @@
 resource "wiz_cloud_configuration_rule" "aws_root_account_usage" {
-  name                     = "JTB75 - Root account used in the last day"
+  name                     = "${var.prefix} - Root account used in the last day"
   description              = "Identifies AWS root accounts that have been used in the last day. Accounts younger than 15 days are skipped to allow the cloud platform team time to set up automation."
   target_native_types      = ["rootUser"]
   severity                 = "HIGH"

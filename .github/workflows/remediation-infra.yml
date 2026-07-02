@@ -29,6 +29,8 @@ jobs:
     defaults:
       run:
         working-directory: remediation-infra
+    env:
+      TF_VAR_prefix: ${{ secrets.PREFIX }}
 
     steps:
       - name: Checkout
@@ -44,13 +46,13 @@ jobs:
         id: account
         run: |
           ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
-          echo "bucket=jtb75-terraform-state-${ACCOUNT_ID}" >> "$GITHUB_OUTPUT"
+          echo "bucket=${{ secrets.PREFIX }}-terraform-state-${ACCOUNT_ID}" >> "$GITHUB_OUTPUT"
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Init
-        run: terraform init -backend-config="bucket=${{ steps.account.outputs.bucket }}"
+        run: terraform init -backend-config="bucket=${{ steps.account.outputs.bucket }}" -backend-config="dynamodb_table=${{ secrets.PREFIX }}-terraform-locks"
 
       - name: Terraform Format Check
         run: terraform fmt -check -recursive

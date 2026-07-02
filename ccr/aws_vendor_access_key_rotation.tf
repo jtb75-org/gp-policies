@@ -1,5 +1,5 @@
 resource "wiz_cloud_configuration_rule" "aws_vendor_access_key_older_than_60_days" {
-  name                     = "JTB75 - Vendor access keys should be rotated every 60 days"
+  name                     = "${var.prefix} - Vendor access keys should be rotated every 60 days"
   description              = "Identifies AWS IAM users tagged as type=vendor with active access keys that have not been rotated in the last 60 days."
   target_native_types      = ["user"]
   severity                 = "HIGH"

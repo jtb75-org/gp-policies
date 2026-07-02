@@ -1,5 +1,5 @@
 resource "wiz_cloud_configuration_rule" "aws_root_access_key" {
-  name                     = "JTB75 - Root account with programmatic access key"
+  name                     = "${var.prefix} - Root account with programmatic access key"
   description              = "Identifies AWS root accounts that have an active programmatic access key attached."
   target_native_types      = ["rootUser"]
   severity                 = "CRITICAL"

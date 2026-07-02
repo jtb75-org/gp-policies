@@ -5,6 +5,7 @@ provider "tf.app.wiz.io/wizsec/wiz" {
   version     = "1.28.14585"
   constraints = ">= 1.0.0"
   hashes = [
+    "h1:JarmitPOCdGI/JRgbxGIXcxDXcRnEIz+ojISapa73b8=",
     "h1:zUUc16labePv5SXWB2zic5bSrMHwW7nyQc6lg2wk0qA=",
     "zh:20970d579dbd9ef1a998d85fb675c7b3b197584b4adb6d06284a812105728916",
     "zh:420f8884bef1438b7b4799147c45fa66a3ddc127212cb7a8c236263dfd7a1f90",

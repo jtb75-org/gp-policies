@@ -1,5 +1,5 @@
 resource "wiz_cloud_configuration_rule" "aws_s3_classified_bucket_encryption" {
-  name                     = "JTB75 - Classified S3 buckets must be encrypted"
+  name                     = "${var.prefix} - Classified S3 buckets must be encrypted"
   description              = "Identifies S3 buckets tagged with data-classification of confidential or highly-confidential that are missing server-side encryption. Buckets without a classified tag are skipped."
   target_native_types      = ["bucket"]
   severity                 = "HIGH"

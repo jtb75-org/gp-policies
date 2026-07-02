@@ -1,5 +1,5 @@
 resource "wiz_cloud_configuration_rule" "aws_kms_key_rotation_warning" {
-  name                     = "JTB75 - KMS key rotation approaching"
+  name                     = "${var.prefix} - KMS key rotation approaching"
   description              = "Identifies KMS keys with automatic rotation scheduled within 5 days. Keys without rotation enabled are skipped."
   target_native_types      = ["encryptionKey"]
   severity                 = "INFORMATIONAL"

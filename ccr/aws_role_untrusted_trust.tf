@@ -1,5 +1,5 @@
 resource "wiz_cloud_configuration_rule" "aws_role_untrusted_trust" {
-  name                     = "JTB75 - IAM roles with untrusted account trust relationships"
+  name                     = "${var.prefix} - IAM roles with untrusted account trust relationships"
   description              = "Identifies IAM roles with trust policies that allow assumption by AWS accounts not in the organization or trusted accounts list."
   target_native_types      = ["role"]
   severity                 = "HIGH"

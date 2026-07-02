@@ -1,5 +1,5 @@
 resource "wiz_cloud_configuration_rule" "aws_consumer_role_missing_type_tag" {
-  name                     = "JTB75 - Consumer roles missing type:consumer tag"
+  name                     = "${var.prefix} - Consumer roles missing type:consumer tag"
   description              = "Identifies IAM roles with 'consumer' in their name that are missing a type:consumer tag."
   target_native_types      = ["role"]
   severity                 = "HIGH"

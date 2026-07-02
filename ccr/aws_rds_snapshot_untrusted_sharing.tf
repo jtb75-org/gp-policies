@@ -1,5 +1,5 @@
 resource "wiz_cloud_configuration_rule" "aws_rds_snapshot_untrusted_sharing" {
-  name                     = "JTB75 - RDS snapshots shared with untrusted accounts"
+  name                     = "${var.prefix} - RDS snapshots shared with untrusted accounts"
   description              = "Identifies RDS database snapshots shared publicly or with AWS accounts not in the organization or trusted accounts list."
   target_native_types      = ["rds#snapshot", "rds#clustersnapshot"]
   severity                 = "HIGH"

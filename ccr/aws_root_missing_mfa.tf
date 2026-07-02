@@ -1,5 +1,5 @@
 resource "wiz_cloud_configuration_rule" "aws_root_missing_mfa" {
-  name                     = "JTB75 - Root account missing MFA"
+  name                     = "${var.prefix} - Root account missing MFA"
   description              = "Identifies AWS root accounts without MFA enabled. Accounts younger than 10 days are exempt to allow for account build automation."
   target_native_types      = ["rootUser"]
   severity                 = "CRITICAL"

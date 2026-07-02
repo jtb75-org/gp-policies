@@ -1,5 +1,5 @@
 resource "wiz_cloud_configuration_rule" "aws_service_access_key_older_than_90_days" {
-  name                     = "JTB75 - Service account access keys should be rotated every 90 days"
+  name                     = "${var.prefix} - Service account access keys should be rotated every 90 days"
   description              = "Identifies AWS IAM service accounts with active access keys that have not been rotated in the last 90 days."
   target_native_types      = ["user"]
   severity                 = "HIGH"

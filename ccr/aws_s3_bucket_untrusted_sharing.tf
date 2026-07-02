@@ -1,5 +1,5 @@
 resource "wiz_cloud_configuration_rule" "aws_s3_bucket_untrusted_sharing" {
-  name                     = "JTB75 - S3 buckets shared with untrusted accounts"
+  name                     = "${var.prefix} - S3 buckets shared with untrusted accounts"
   description              = "Identifies S3 buckets shared with AWS accounts not in the organization or trusted accounts list via bucket policy, ACL, or inventory configuration."
   target_native_types      = ["bucket"]
   severity                 = "HIGH"

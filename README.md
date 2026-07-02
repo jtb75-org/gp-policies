@@ -87,8 +87,9 @@ Before running any Terraform, you must create the S3 bucket and DynamoDB table u
 
 ```bash
 # Get your AWS Account ID
+PREFIX="your-prefix" # e.g. "joe-buhr"
 ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
-BUCKET="jtb75-terraform-state-${ACCOUNT_ID}"
+BUCKET="${PREFIX}-terraform-state-${ACCOUNT_ID}"
 
 # Create S3 Bucket for State
 aws s3api create-bucket --bucket "$BUCKET" --region us-east-1
@@ -98,7 +99,7 @@ aws s3api put-public-access-block --bucket "$BUCKET" --public-access-block-confi
 
 # Create DynamoDB Table for Locks
 aws dynamodb create-table \
-  --table-name jtb75-terraform-locks \
+  --table-name "${PREFIX}-terraform-locks" \
   --attribute-definitions AttributeName=LockID,AttributeType=S \
   --key-schema AttributeName=LockID,KeyType=HASH \
   --billing-mode PAY_PER_REQUEST \
@@ -129,6 +130,7 @@ Configure the following secrets in your GitHub repository for the workflows to r
 
 | Secret | Description | Source |
 | :--- | :--- | :--- |
+| `PREFIX` | Prefix for resource names (e.g. `joe-buhr`) | Chosen by you (used for S3/DynamoDB) |
 | `AWS_ROLE_ARN` | IAM Role for GitHub Actions (OIDC) | Created in Step 3 |
 | `WIZ_CLIENT_ID` | Wiz API Client ID | Your Wiz Service Account (e.g. from `.env`) |
 | `WIZ_CLIENT_SECRET` | Wiz API Client Secret | Your Wiz Service Account (e.g. from `.env`) |
@@ -154,13 +156,17 @@ source .env
 
 # Deploy CCR Rules
 cd ccr
-terraform init -backend-config="bucket=jtb75-terraform-state-YOUR_ACCOUNT_ID"
-terraform apply
+terraform init \
+  -backend-config="bucket=YOUR_PREFIX-terraform-state-YOUR_ACCOUNT_ID" \
+  -backend-config="dynamodb_table=YOUR_PREFIX-terraform-locks"
+TF_VAR_prefix="YOUR_PREFIX" terraform apply
 
 # Deploy Remediation Infra
 cd remediation-infra
-terraform init -backend-config="bucket=jtb75-terraform-state-YOUR_ACCOUNT_ID"
-terraform apply
+terraform init \
+  -backend-config="bucket=YOUR_PREFIX-terraform-state-YOUR_ACCOUNT_ID" \
+  -backend-config="dynamodb_table=YOUR_PREFIX-terraform-locks"
+TF_VAR_prefix="YOUR_PREFIX" TF_VAR_cluster_name="YOUR_PREFIX-wiz-remediation" terraform apply
 ```
 
 ## Testing Rules

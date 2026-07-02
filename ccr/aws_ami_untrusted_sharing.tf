@@ -1,5 +1,5 @@
 resource "wiz_cloud_configuration_rule" "aws_ami_untrusted_sharing" {
-  name                     = "JTB75 - EC2 AMIs shared with untrusted accounts"
+  name                     = "${var.prefix} - EC2 AMIs shared with untrusted accounts"
   description              = "Identifies EC2 AMIs (machine images) shared publicly or with AWS accounts not in the organization or trusted accounts list."
   target_native_types      = ["ami"]
   severity                 = "HIGH"

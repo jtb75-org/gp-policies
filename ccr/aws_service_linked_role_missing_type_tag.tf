@@ -1,5 +1,5 @@
 resource "wiz_cloud_configuration_rule" "aws_service_linked_role_missing_type_tag" {
-  name                     = "JTB75 - Service/service-linked roles missing type:service tag"
+  name                     = "${var.prefix} - Service/service-linked roles missing type:service tag"
   description              = "Identifies IAM roles with path /service-role/ or /aws-service-role/ that are missing a type:service tag."
   target_native_types      = ["role"]
   severity                 = "HIGH"

@@ -3,7 +3,7 @@
 # =============================================================================
 
 resource "wiz_remediation_and_response_deployment_v2" "main" {
-  name                 = "joe-buhr Remediation"
+  name                 = "${var.prefix} Remediation"
   resource_name_prefix = "Wiz"
 
   config {
@@ -11,7 +11,7 @@ resource "wiz_remediation_and_response_deployment_v2" "main" {
       method = "TERRAFORM"
       scope  = "SINGLE_ACCOUNT"
       kubernetes {
-        cluster_arn = "arn:aws:eks:us-east-1:494378024839:cluster/joe-buhr-wiz-remediation"
+        cluster_arn = "arn:aws:eks:us-east-1:494378024839:cluster/${var.prefix}-wiz-remediation"
         namespace   = "wiz-remediation"
       }
     }
