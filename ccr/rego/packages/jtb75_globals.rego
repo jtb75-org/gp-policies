@@ -8,6 +8,7 @@ package customPackage.jtb75Globals
 trusted_internal_accounts := {
     "123456789012",
     "234567890123",
+    "494378024839",
 }
 
 # AWS accounts owned by trusted third parties.

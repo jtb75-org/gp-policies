@@ -36,6 +36,7 @@ TRUSTED_ACCOUNTS = {
     "123456789012",
     "234567890123",
     "345678901234",
+    "494378024839",
 }
 
 BACKUP_TAG_KEY = "wiz:removed-principals"
