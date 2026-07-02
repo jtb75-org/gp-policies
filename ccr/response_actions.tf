@@ -10,7 +10,7 @@ resource "wiz_file_upload" "tag_consumer_role" {
 }
 
 resource "wiz_response_action_catalog_item" "tag_consumer_role" {
-  name           = "JTB75 - Tag consumer role"
+  name           = "${var.prefix} - Tag consumer role"
   description    = "Auto-tag IAM roles containing 'consumer' in the name with type:consumer."
   cloud_platform = "AWS"
 
@@ -36,7 +36,7 @@ resource "wiz_file_upload" "remove_untrusted_trust" {
 }
 
 resource "wiz_response_action_catalog_item" "remove_untrusted_trust" {
-  name           = "JTB75 - Remove untrusted trusts from roles"
+  name           = "${var.prefix} - Remove untrusted trusts from roles"
   description    = "Remove untrusted AWS principals from IAM role trust policies. Preserves trusted accounts and service principals."
   cloud_platform = "AWS"
 
@@ -71,7 +71,7 @@ resource "wiz_file_upload" "deactivate_stale_access_keys" {
 }
 
 resource "wiz_response_action_catalog_item" "deactivate_stale_access_keys" {
-  name           = "JTB75 - Deactivate stale access keys"
+  name           = "${var.prefix} - Deactivate stale access keys"
   description    = "Deactivate IAM access keys that have exceeded the rotation threshold for the user's type (service=90d, vendor=60d, user/default=30d)."
   cloud_platform = "AWS"
 
@@ -111,7 +111,7 @@ resource "wiz_file_upload" "quarantine_s3_malware" {
 }
 
 resource "wiz_response_action_catalog_item" "quarantine_s3_malware" {
-  name           = "JTB75 - Quarantine S3 malware"
+  name           = "${var.prefix} - Quarantine S3 malware"
   description    = "Quarantine malicious files detected in S3 buckets by moving them to a secure quarantine bucket and deleting the original."
   cloud_platform = "AWS"
 
