@@ -7,24 +7,32 @@ module "remediation_roles" {
 
   cluster_arn      = aws_eks_cluster.remediation.arn
   namespace        = var.remediation_namespace
-  resources_prefix = "Wiz"
+  resources_prefix = var.prefix
 
   permission_sets = {
-    "rem-custom-0009" : [
-      "iam:GetRole",
-      "iam:TagRole",
-      "iam:UpdateAssumeRolePolicy"
+    "rem-aws-ec2-response-001" : [
+      "ec2:CreateTags",
+      "ec2:DescribeInstances",
+      "ec2:StopInstances",
+      "tag:TagResources"
     ],
-    "rem-custom-0010" : [
-      "iam:GetRole",
-      "iam:TagRole"
+    "rem-aws-ec2-response-002" : [
+      "ec2:CreateTags",
+      "ec2:RebootInstances",
+      "tag:TagResources"
     ],
-    "rem-custom-0011" : [
-      "iam:GetAccessKeyLastUsed",
-      "iam:ListAccessKeys",
-      "iam:ListUserTags",
-      "iam:TagUser",
-      "iam:UpdateAccessKey"
+    "rem-aws-ec2-response-003" : [
+      "ec2:DescribeInstances",
+      "ec2:TerminateInstances"
     ]
   }
+}
+
+# Outputs
+output "runner_role_arn" {
+  value = module.remediation_roles.runner_role_arn
+}
+
+output "remediation_role_arns" {
+  value = module.remediation_roles.remediation_role_arns
 }
