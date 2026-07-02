@@ -74,7 +74,7 @@ metadata:
   name: webhook-echo
   namespace: wiz-remediation
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
   - port: 80
     targetPort: 8080
