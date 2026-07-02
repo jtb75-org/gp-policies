@@ -6,9 +6,9 @@ imagePullSecrets:
 - name: wiz-outpost-lite-image-pull
 replicaCount: 2
 runners:
-  rem-aws-ec2-response-001:
+  rem-custom-0004:
     enabled: true
-  rem-aws-ec2-response-002:
+  rem-custom-0005:
     enabled: true
-  rem-aws-ec2-response-003:
+  rem-custom-0006:
     enabled: true

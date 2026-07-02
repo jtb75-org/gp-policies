@@ -10,20 +10,23 @@ module "remediation_roles" {
   resources_prefix = var.prefix
 
   permission_sets = {
-    "rem-aws-ec2-response-001" : [
-      "ec2:CreateTags",
-      "ec2:DescribeInstances",
-      "ec2:StopInstances",
-      "tag:TagResources"
+    "rem-custom-0004" : [
+      "iam:GetRole",
+      "iam:TagRole"
     ],
-    "rem-aws-ec2-response-002" : [
-      "ec2:CreateTags",
-      "ec2:RebootInstances",
-      "tag:TagResources"
+    "rem-custom-0005" : [
+      "iam:GetRole",
+      "iam:TagRole",
+      "iam:UntagRole",
+      "iam:UpdateAssumeRolePolicy"
     ],
-    "rem-aws-ec2-response-003" : [
-      "ec2:DescribeInstances",
-      "ec2:TerminateInstances"
+    "rem-custom-0006" : [
+      "iam:GetAccessKeyLastUsed",
+      "iam:ListAccessKeys",
+      "iam:ListUserTags",
+      "iam:TagUser",
+      "iam:UntagUser",
+      "iam:UpdateAccessKey"
     ]
   }
 }
