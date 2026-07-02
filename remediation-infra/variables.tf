@@ -7,7 +7,7 @@ variable "region" {
 variable "cluster_name" {
   description = "Name of the EKS cluster"
   type        = string
-  default     = "jtb75-wiz-remediation"
+  default     = "joe-buhr-wiz-remediation"
 }
 
 variable "cluster_version" {
@@ -50,7 +50,7 @@ variable "remediation_namespace" {
 variable "cluster_admin_arns" {
   description = "List of IAM ARNs to grant cluster admin access"
   type        = list(string)
-  default     = ["arn:aws:iam::695862934856:user/odl_user_2120988"]
+  default     = ["arn:aws:iam::494378024839:user/odl_user_2301881"]
 }
 
 variable "vpc_cidr" {
