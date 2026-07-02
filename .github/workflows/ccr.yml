@@ -15,6 +15,7 @@ on:
         options:
           - plan
           - apply
+          - destroy
 
 permissions:
   id-token: write
@@ -61,8 +62,16 @@ jobs:
         continue-on-error: true
 
       - name: Terraform Plan
+        if: |
+          github.event_name == 'pull_request' ||
+          github.event_name == 'push' ||
+          (github.event_name == 'workflow_dispatch' && inputs.action != 'destroy')
         id: plan
         run: terraform plan -out=tfplan -no-color 2>&1 | tee plan.txt
+
+      - name: Terraform Plan Destroy
+        if: github.event_name == 'workflow_dispatch' && inputs.action == 'destroy'
+        run: terraform plan -destroy -out=tfplan -no-color 2>&1 | tee plan.txt
 
       - name: Comment Plan on PR
         if: github.event_name == 'pull_request'
@@ -82,5 +91,5 @@ jobs:
       - name: Terraform Apply
         if: |
           (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
-          (github.event_name == 'workflow_dispatch' && inputs.action == 'apply')
+          (github.event_name == 'workflow_dispatch' && (inputs.action == 'apply' || inputs.action == 'destroy'))
         run: terraform apply tfplan
