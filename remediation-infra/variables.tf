@@ -58,3 +58,9 @@ variable "vpc_cidr" {
   type        = string
   default     = "10.250.0.0/16"
 }
+
+variable "prefix" {
+  description = "Prefix for resource names"
+  type        = string
+  default     = "jtb75"
+}
