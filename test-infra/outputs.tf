@@ -89,14 +89,17 @@ output "malware_file_hashes" {
   value = {
     "eicar_test_1.txt" = {
       md5    = md5(aws_s3_object.malware_file_1.content)
+      sha1   = sha1(aws_s3_object.malware_file_1.content)
       sha256 = sha256(aws_s3_object.malware_file_1.content)
     }
     "eicar_test_2.txt" = {
       md5    = md5(aws_s3_object.malware_file_2.content)
+      sha1   = sha1(aws_s3_object.malware_file_2.content)
       sha256 = sha256(aws_s3_object.malware_file_2.content)
     }
     "eicar_test_3.txt" = {
       md5    = md5(aws_s3_object.malware_file_3.content)
+      sha1   = sha1(aws_s3_object.malware_file_3.content)
       sha256 = sha256(aws_s3_object.malware_file_3.content)
     }
   }
