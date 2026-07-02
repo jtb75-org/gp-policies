@@ -32,7 +32,7 @@ jobs:
       WIZ_CLIENT_ID: ${{ secrets.WIZ_CLIENT_ID }}
       WIZ_CLIENT_SECRET: ${{ secrets.WIZ_CLIENT_SECRET }}
       TF_VAR_prefix: ${{ secrets.PREFIX }}
-      TF_VAR_target_project_id: ${{ secrets.WIZ_PROJECT_ID }}
+      TF_VAR_target_project_id: ${{ vars.WIZ_PROJECT_ID || secrets.WIZ_PROJECT_ID }}
 
     steps:
       - name: Checkout

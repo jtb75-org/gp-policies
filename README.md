@@ -124,19 +124,19 @@ To allow GitHub Actions to deploy resources without storing permanent AWS creden
     gh secret set AWS_ROLE_ARN -b "arn:aws:iam::YOUR_ACCOUNT_ID:role/github-actions-remediation-role"
     ```
 
-### 4. Configure GitHub Secrets
+### 4. Configure GitHub Secrets and Variables
 
-Configure the following secrets in your GitHub repository for the workflows to run:
+Configure the following secrets and variables in your GitHub repository (under **Settings > Secrets and variables > Actions**) for the workflows to run:
 
-| Secret | Description | Source |
-| :--- | :--- | :--- |
-| `PREFIX` | Prefix for resource names (e.g. `joe-buhr`) | Chosen by you (used for S3/DynamoDB) |
-| `AWS_ROLE_ARN` | IAM Role for GitHub Actions (OIDC) | Created in Step 3 |
-| `WIZ_CLIENT_ID` | Wiz API Client ID | Your Wiz Service Account (e.g. from `.env`) |
-| `WIZ_CLIENT_SECRET` | Wiz API Client Secret | Your Wiz Service Account (e.g. from `.env`) |
-| `WIZ_DOCKER_USERNAME` | Wiz Container Registry Username | Wiz Portal (Tenant Info) |
-| `WIZ_DOCKER_PASSWORD` | Wiz Container Registry Password | Wiz Portal (Tenant Info) |
-| `WIZ_PROJECT_ID` (Optional) | Wiz Project ID to scope the custom rules to. If omitted, rules apply globally. | Wiz Portal (Project Settings) |
+| Name | Type | Description | Source |
+| :--- | :--- | :--- | :--- |
+| `PREFIX` | Secret | Prefix for resource names (e.g. `joe-buhr`) | Chosen by you (used for S3/DynamoDB) |
+| `AWS_ROLE_ARN` | Secret | IAM Role for GitHub Actions (OIDC) | Created in Step 3 |
+| `WIZ_CLIENT_ID` | Secret | Wiz API Client ID | Your Wiz Service Account (e.g. from `.env`) |
+| `WIZ_CLIENT_SECRET` | Secret | Wiz API Client Secret | Your Wiz Service Account (e.g. from `.env`) |
+| `WIZ_DOCKER_USERNAME` | Secret | Wiz Container Registry Username | Wiz Portal (Tenant Info) |
+| `WIZ_DOCKER_PASSWORD` | Secret | Wiz Container Registry Password | Wiz Portal (Tenant Info) |
+| `WIZ_PROJECT_ID` | Variable or Secret | *Optional.* Wiz Project ID to scope the custom rules to. If omitted, rules apply globally. | Wiz Portal (Project Settings) |
 
 ### 5. Deployment via GitHub Actions
 
