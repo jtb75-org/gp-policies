@@ -80,6 +80,19 @@ resource "wiz_remediation_and_response_deployment_v2" "main" {
       }
     }
   }
+
+  # --- Custom: Quarantine S3 Malware ---
+  deployed_response_action_configs {
+    response_action_catalog_item         = wiz_response_action_catalog_item.quarantine_s3_malware.id
+    response_action_catalog_item_version = wiz_response_action_catalog_item.quarantine_s3_malware.versions[0].id
+    deployed_response_action_instance_configs {
+      status        = "ENABLED"
+      is_disruptive = true
+      target {
+        graph_entity_native_type = "bucket"
+      }
+    }
+  }
 }
 
 # --- Outputs: generated configs for Helm and IAM ---
