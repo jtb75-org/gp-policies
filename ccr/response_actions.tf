@@ -102,3 +102,41 @@ resource "wiz_response_action_catalog_item" "deactivate_stale_access_keys" {
 
   file_upload = wiz_file_upload.deactivate_stale_access_keys.id
 }
+
+# --- Quarantine S3 Malware ---
+
+resource "wiz_file_upload" "quarantine_s3_malware" {
+  filename = "quarantine-s3-malware.py"
+  content  = file("${path.module}/../remediation-infra/custom-actions/quarantine-s3-malware.py")
+}
+
+resource "wiz_response_action_catalog_item" "quarantine_s3_malware" {
+  name           = "JTB75 - Quarantine S3 malware"
+  description    = "Quarantine malicious files detected in S3 buckets by moving them to a secure quarantine bucket and deleting the original."
+  cloud_platform = "AWS"
+
+  cloud_provider_permissions = [
+    "s3:GetObject",
+    "s3:GetObjectVersion",
+    "s3:DeleteObject",
+    "s3:DeleteObjectVersion",
+    "s3:PutObject",
+    "s3:ListBucket",
+    "s3:ListBucketVersions"
+  ]
+
+  revertible = true
+
+  revert_cloud_provider_permissions = [
+    "s3:GetObject",
+    "s3:PutObject",
+    "s3:DeleteObject",
+    "s3:ListBucket"
+  ]
+
+  targets {
+    graph_entity_native_type = ["bucket"]
+  }
+
+  file_upload = wiz_file_upload.quarantine_s3_malware.id
+}
