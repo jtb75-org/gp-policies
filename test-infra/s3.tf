@@ -115,11 +115,11 @@ resource "aws_s3_object" "malware_file_1" {
 resource "aws_s3_object" "malware_file_2" {
   bucket  = aws_s3_bucket.test_malware.id
   key     = "eicar_test_2.txt"
-  content = "Some other dummy malware content 2"
+  content = "X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*"
 }
 
 resource "aws_s3_object" "malware_file_3" {
   bucket  = aws_s3_bucket.test_malware.id
   key     = "eicar_test_3.txt"
-  content = "Some other dummy malware content 3"
+  content = "X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*"
 }
