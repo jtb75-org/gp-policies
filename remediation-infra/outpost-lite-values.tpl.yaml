@@ -12,3 +12,5 @@ runners:
     enabled: true
   rem-custom-0006:
     enabled: true
+  rem-custom-0007:
+    enabled: true
