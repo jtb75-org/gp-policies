@@ -63,52 +63,104 @@ See [RULES.md](RULES.md) for the complete rules reference, including description
 
 - Terraform 0.14+
 - A Wiz service account with Custom Integration (GraphQL API) type and write permissions
-- AWS credentials (for test-infra and remediation-infra)
+- AWS credentials (with permissions to create IAM roles, OIDC providers, S3, DynamoDB, EKS, and VPC)
+- GitHub CLI (`gh`) authenticated to your repository (for secrets configuration)
 
-### Authentication
+### 1. Local Authentication (for Bootstrap & CLI)
 
-Create a `.env` file (already gitignored):
+Create a `.env` file in the root of the repository (this file is gitignored):
 
 ```bash
 # Wiz credentials (for ccr/)
 export WIZ_CLIENT_ID=your-client-id
 export WIZ_CLIENT_SECRET=your-client-secret
 
-# AWS credentials (for test-infra/ and remediation-infra/)
+# AWS credentials (for bootstrap and local administration)
 export AWS_ACCESS_KEY_ID=your-access-key
 export AWS_SECRET_ACCESS_KEY=your-secret-key
 export AWS_DEFAULT_REGION=us-east-1
 ```
 
-### Deploy CCR Rules
+### 2. Bootstrap Terraform Backend
+
+Before running any Terraform, you must create the S3 bucket and DynamoDB table used for storing the remote state. Run the following commands locally using your configured AWS credentials (e.g. using the `wiz-labs` profile):
+
+```bash
+# Get your AWS Account ID
+ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+BUCKET="jtb75-terraform-state-${ACCOUNT_ID}"
+
+# Create S3 Bucket for State
+aws s3api create-bucket --bucket "$BUCKET" --region us-east-1
+aws s3api put-bucket-versioning --bucket "$BUCKET" --versioning-configuration Status=Enabled
+aws s3api put-bucket-encryption --bucket "$BUCKET" --server-side-encryption-configuration '{"Rules": [{"ApplyServerSideEncryptionByDefault": {"SSEAlgorithm": "AES256"}}]}'
+aws s3api put-public-access-block --bucket "$BUCKET" --public-access-block-configuration '{"BlockPublicAcls": true, "IgnorePublicAcls": true, "BlockPublicPolicy": true, "RestrictPublicBuckets": true}'
+
+# Create DynamoDB Table for Locks
+aws dynamodb create-table \
+  --table-name jtb75-terraform-locks \
+  --attribute-definitions AttributeName=LockID,AttributeType=S \
+  --key-schema AttributeName=LockID,KeyType=HASH \
+  --billing-mode PAY_PER_REQUEST \
+  --region us-east-1
+```
+
+### 3. Configure GitHub OIDC Trust
+
+To allow GitHub Actions to deploy resources without storing permanent AWS credentials, configure an OIDC trust between GitHub and AWS:
+
+1.  **Create the OIDC Provider in AWS** (if it doesn't exist):
+    ```bash
+    aws iam create-open-id-connect-provider \
+      --url "https://token.actions.githubusercontent.com" \
+      --client-id-list "sts.amazonaws.com" \
+      --thumbprint-list "6938fd4d98bab03faadb97b34396831e3780aea1"
+    ```
+2.  **Create the IAM Role for GitHub Actions** with a trust policy allowing access from your repository (`jtb75-org/gp-policies`).
+3.  **Attach permissions** (e.g., `AdministratorAccess` for lab environments) to the role.
+4.  **Set the GitHub Secret** `AWS_ROLE_ARN` with the ARN of the created role:
+    ```bash
+    gh secret set AWS_ROLE_ARN -b "arn:aws:iam::YOUR_ACCOUNT_ID:role/github-actions-remediation-role"
+    ```
+
+### 4. Configure GitHub Secrets
+
+Configure the following secrets in your GitHub repository for the workflows to run:
+
+| Secret | Description | Source |
+| :--- | :--- | :--- |
+| `AWS_ROLE_ARN` | IAM Role for GitHub Actions (OIDC) | Created in Step 3 |
+| `WIZ_CLIENT_ID` | Wiz API Client ID | Your Wiz Service Account (e.g. from `.env`) |
+| `WIZ_CLIENT_SECRET` | Wiz API Client Secret | Your Wiz Service Account (e.g. from `.env`) |
+| `WIZ_DOCKER_USERNAME` | Wiz Container Registry Username | Wiz Portal (Tenant Info) |
+| `WIZ_DOCKER_PASSWORD` | Wiz Container Registry Password | Wiz Portal (Tenant Info) |
+
+### 5. Deployment via GitHub Actions
+
+The deployments are automated via GitHub Actions workflows:
+
+*   **Remediation Infrastructure (EKS):** Triggered automatically on push to `main` when files in `remediation-infra/` change. Can also be run manually via the Actions tab.
+*   **Wiz CCR Rules:** Triggered automatically on push to `main` when files in `ccr/` change.
+*   **Outpost Lite (Helm):** Must be run **manually** via the Actions tab (`Outpost Lite - Wiz Helm Deployment`) once the EKS cluster and CCR deployments are complete.
+
+---
+
+### Alternative: Local Deployment
+
+If you prefer to deploy manually from your local machine, you can run:
 
 ```bash
 source .env
+
+# Deploy CCR Rules
 cd ccr
-terraform init
-terraform plan
+terraform init -backend-config="bucket=jtb75-terraform-state-YOUR_ACCOUNT_ID"
 terraform apply
-```
 
-### Deploy Test Infrastructure
-
-```bash
-source .env
-cd test-infra
-terraform init
-terraform plan
-terraform apply    # Creates non-compliant resources to trigger CCRs
-terraform destroy  # Clean up when done testing
-```
-
-### Deploy Remediation Infrastructure
-
-```bash
-source .env
+# Deploy Remediation Infra
 cd remediation-infra
-terraform init
-terraform plan
-terraform apply    # Creates EKS cluster, IAM roles, namespace
+terraform init -backend-config="bucket=jtb75-terraform-state-YOUR_ACCOUNT_ID"
+terraform apply
 ```
 
 ## Testing Rules
