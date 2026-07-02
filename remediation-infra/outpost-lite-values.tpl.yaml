@@ -4,10 +4,11 @@ agent:
   outpostId: "${WIZ_OUTPOST_ID}"
 imagePullSecrets:
 - name: wiz-outpost-lite-image-pull
+replicaCount: 2
 runners:
-  rem-custom-0009:
+  rem-aws-ec2-response-001:
     enabled: true
-  rem-custom-0010:
+  rem-aws-ec2-response-002:
     enabled: true
-  rem-custom-0011:
+  rem-aws-ec2-response-003:
     enabled: true
