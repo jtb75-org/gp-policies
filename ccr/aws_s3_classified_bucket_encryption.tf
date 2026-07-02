@@ -30,4 +30,5 @@ resource "wiz_cloud_configuration_rule" "aws_s3_classified_bucket_encryption" {
 
   opa_policy       = file("${path.module}/rego/aws_s3_classified_bucket_encryption.rego")
   scope_project_id = local.scope_project_id
+  depends_on       = [wiz_custom_rego_package.jtb75_globals]
 }

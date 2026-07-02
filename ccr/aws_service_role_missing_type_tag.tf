@@ -13,4 +13,5 @@ resource "wiz_cloud_configuration_rule" "aws_service_role_missing_type_tag" {
 
   opa_policy       = file("${path.module}/rego/aws_service_role_missing_type_tag.rego")
   scope_project_id = local.scope_project_id
+  depends_on       = [wiz_custom_rego_package.jtb75_globals]
 }

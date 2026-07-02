@@ -28,4 +28,5 @@ resource "wiz_cloud_configuration_rule" "aws_ami_untrusted_sharing" {
 
   opa_policy       = file("${path.module}/rego/aws_ami_untrusted_sharing.rego")
   scope_project_id = local.scope_project_id
+  depends_on       = [wiz_custom_rego_package.jtb75_globals]
 }

@@ -16,4 +16,5 @@ resource "wiz_cloud_configuration_rule" "aws_untagged_access_key_older_than_25_d
 
   opa_policy       = file("${path.module}/rego/aws_untagged_access_key_rotation_warning.rego")
   scope_project_id = local.scope_project_id
+  depends_on       = [wiz_custom_rego_package.jtb75_globals]
 }
