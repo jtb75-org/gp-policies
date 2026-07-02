@@ -5,7 +5,7 @@ package wiz
 import rego.v1
 
 # Import shared globals for thresholds
-import data.customPackage.jtb75Globals as globals
+import data.customPackage.jtb75globals as globals
 
 # Default to "pass" so the rule only fails when conditions are met.
 default result = "pass"

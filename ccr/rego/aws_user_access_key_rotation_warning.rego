@@ -5,7 +5,7 @@ package wiz
 import rego.v1
 
 # Import shared globals for rotation thresholds
-import data.customPackage.jtb75Globals as globals
+import data.customPackage.jtb75globals as globals
 
 # The "result" variable controls the rule outcome.
 # It must return "pass", "fail", or "skip".

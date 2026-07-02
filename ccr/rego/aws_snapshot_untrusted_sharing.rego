@@ -7,7 +7,7 @@ import rego.v1
 # Import the shared globals package which contains our trusted account lists.
 # This is a custom Rego package managed via wiz_custom_rego_package in Terraform.
 # "globals" is an alias so we can reference it as globals.trusted_internal_accounts, etc.
-import data.customPackage.jtb75Globals as globals
+import data.customPackage.jtb75globals as globals
 
 # The "result" variable controls the rule outcome.
 # It must return "pass", "fail", or "skip".

@@ -1,7 +1,7 @@
 # Custom Rego packages must use the "customPackage.<name>" namespace.
 # This package is imported by rules using:
 #   import data.customPackage.jtb75Globals as globals
-package customPackage.jtb75Globals
+package customPackage.jtb75globals
 
 # AWS accounts that belong to our organization.
 # These are accounts managed internally and connected to Wiz.
