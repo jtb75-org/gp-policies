@@ -28,11 +28,4 @@ module "remediation_roles" {
   }
 }
 
-# Outputs
-output "runner_role_arn" {
-  value = module.remediation_roles.runner_role_arn
-}
 
-output "remediation_role_arns" {
-  value = module.remediation_roles.remediation_role_arns
-}
