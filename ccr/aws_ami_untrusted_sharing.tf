@@ -26,5 +26,6 @@ resource "wiz_cloud_configuration_rule" "aws_ami_untrusted_sharing" {
     ```
   EOT
 
-  opa_policy = file("${path.module}/rego/aws_ami_untrusted_sharing.rego")
+  opa_policy       = file("${path.module}/rego/aws_ami_untrusted_sharing.rego")
+  scope_project_id = local.scope_project_id
 }

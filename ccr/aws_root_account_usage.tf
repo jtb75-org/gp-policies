@@ -12,5 +12,6 @@ resource "wiz_cloud_configuration_rule" "aws_root_account_usage" {
     5. Review CloudTrail logs for the root account activity to determine what actions were performed.
   EOT
 
-  opa_policy = file("${path.module}/rego/aws_root_account_usage.rego")
+  opa_policy       = file("${path.module}/rego/aws_root_account_usage.rego")
+  scope_project_id = local.scope_project_id
 }

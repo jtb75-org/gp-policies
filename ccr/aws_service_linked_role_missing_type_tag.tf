@@ -11,5 +11,6 @@ resource "wiz_cloud_configuration_rule" "aws_service_linked_role_missing_type_ta
     4. Note: Service-linked roles may have restricted tag editing. If so, contact your cloud platform team.
   EOT
 
-  opa_policy = file("${path.module}/rego/aws_service_linked_role_missing_type_tag.rego")
+  opa_policy       = file("${path.module}/rego/aws_service_linked_role_missing_type_tag.rego")
+  scope_project_id = local.scope_project_id
 }

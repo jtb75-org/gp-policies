@@ -136,6 +136,7 @@ Configure the following secrets in your GitHub repository for the workflows to r
 | `WIZ_CLIENT_SECRET` | Wiz API Client Secret | Your Wiz Service Account (e.g. from `.env`) |
 | `WIZ_DOCKER_USERNAME` | Wiz Container Registry Username | Wiz Portal (Tenant Info) |
 | `WIZ_DOCKER_PASSWORD` | Wiz Container Registry Password | Wiz Portal (Tenant Info) |
+| `WIZ_PROJECT_ID` (Optional) | Wiz Project ID to scope the custom rules to. If omitted, rules apply globally. | Wiz Portal (Project Settings) |
 
 ### 5. Deployment via GitHub Actions
 

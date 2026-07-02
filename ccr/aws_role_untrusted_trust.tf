@@ -13,5 +13,6 @@ resource "wiz_cloud_configuration_rule" "aws_role_untrusted_trust" {
     6. If the account should be trusted, add it to the trusted accounts list in the globals package.
   EOT
 
-  opa_policy = file("${path.module}/rego/aws_role_untrusted_trust.rego")
+  opa_policy       = file("${path.module}/rego/aws_role_untrusted_trust.rego")
+  scope_project_id = local.scope_project_id
 }

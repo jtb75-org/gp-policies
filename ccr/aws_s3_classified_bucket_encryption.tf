@@ -28,5 +28,6 @@ resource "wiz_cloud_configuration_rule" "aws_s3_classified_bucket_encryption" {
     ```
   EOT
 
-  opa_policy = file("${path.module}/rego/aws_s3_classified_bucket_encryption.rego")
+  opa_policy       = file("${path.module}/rego/aws_s3_classified_bucket_encryption.rego")
+  scope_project_id = local.scope_project_id
 }

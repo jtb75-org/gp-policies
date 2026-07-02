@@ -32,5 +32,6 @@ resource "wiz_cloud_configuration_rule" "aws_rds_backup_retention" {
     ```
   EOT
 
-  opa_policy = file("${path.module}/rego/aws_rds_backup_retention.rego")
+  opa_policy       = file("${path.module}/rego/aws_rds_backup_retention.rego")
+  scope_project_id = local.scope_project_id
 }

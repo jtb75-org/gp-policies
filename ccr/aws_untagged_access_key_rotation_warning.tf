@@ -14,5 +14,6 @@ resource "wiz_cloud_configuration_rule" "aws_untagged_access_key_older_than_25_d
     7. Deactivate and then delete the old access key.
   EOT
 
-  opa_policy = file("${path.module}/rego/aws_untagged_access_key_rotation_warning.rego")
+  opa_policy       = file("${path.module}/rego/aws_untagged_access_key_rotation_warning.rego")
+  scope_project_id = local.scope_project_id
 }

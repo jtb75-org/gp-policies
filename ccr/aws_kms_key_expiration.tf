@@ -20,5 +20,6 @@ resource "wiz_cloud_configuration_rule" "aws_kms_key_expiration" {
     5. Alternatively, set `--expiration-model KEY_MATERIAL_DOES_NOT_EXPIRE` to remove the expiration.
   EOT
 
-  opa_policy = file("${path.module}/rego/aws_kms_key_expiration.rego")
+  opa_policy       = file("${path.module}/rego/aws_kms_key_expiration.rego")
+  scope_project_id = local.scope_project_id
 }

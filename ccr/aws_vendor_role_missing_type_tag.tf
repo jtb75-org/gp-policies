@@ -11,5 +11,6 @@ resource "wiz_cloud_configuration_rule" "aws_vendor_role_missing_type_tag" {
     4. Add or correct the **type** tag with one of the valid values: `user`, `service`, `vendor`.
   EOT
 
-  opa_policy = file("${path.module}/rego/aws_vendor_role_missing_type_tag.rego")
+  opa_policy       = file("${path.module}/rego/aws_vendor_role_missing_type_tag.rego")
+  scope_project_id = local.scope_project_id
 }

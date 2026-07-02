@@ -12,5 +12,6 @@ resource "wiz_cloud_configuration_rule" "aws_user_aws_managed_policy" {
     5. Create and attach a customer-managed policy scoped to the specific actions and resources the user needs.
   EOT
 
-  opa_policy = file("${path.module}/rego/aws_user_aws_managed_policy.rego")
+  opa_policy       = file("${path.module}/rego/aws_user_aws_managed_policy.rego")
+  scope_project_id = local.scope_project_id
 }

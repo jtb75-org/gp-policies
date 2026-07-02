@@ -12,5 +12,6 @@ resource "wiz_cloud_configuration_rule" "aws_root_missing_mfa" {
     5. Verify MFA is working by signing out and signing back in.
   EOT
 
-  opa_policy = file("${path.module}/rego/aws_root_missing_mfa.rego")
+  opa_policy       = file("${path.module}/rego/aws_root_missing_mfa.rego")
+  scope_project_id = local.scope_project_id
 }

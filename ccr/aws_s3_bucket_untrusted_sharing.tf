@@ -14,5 +14,6 @@ resource "wiz_cloud_configuration_rule" "aws_s3_bucket_untrusted_sharing" {
     5. If the bucket is public, enable **Block Public Access** settings.
   EOT
 
-  opa_policy = file("${path.module}/rego/aws_s3_bucket_untrusted_sharing.rego")
+  opa_policy       = file("${path.module}/rego/aws_s3_bucket_untrusted_sharing.rego")
+  scope_project_id = local.scope_project_id
 }

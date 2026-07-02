@@ -11,5 +11,6 @@ resource "wiz_cloud_configuration_rule" "aws_root_access_key" {
     4. Use IAM roles or IAM users with least-privilege policies for programmatic access.
   EOT
 
-  opa_policy = file("${path.module}/rego/aws_root_access_key.rego")
+  opa_policy       = file("${path.module}/rego/aws_root_access_key.rego")
+  scope_project_id = local.scope_project_id
 }
