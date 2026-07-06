@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: remediation-portal
+  namespace: wiz-remediation
+  labels:
+    app: remediation-portal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: remediation-portal
+  template:
+    metadata:
+      labels:
+        app: remediation-portal
+    spec:
+      containers:
+      - name: portal
+        image: python:3.11-slim
+        command: ["sh", "-c"]
+        args:
+        - |
+          pip install fastapi uvicorn requests
+          python /app/remediation-portal.py
+        ports:
+        - containerPort: 8080
+        env:
+        # Wiz API credentials from secret
+        - name: WIZ_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: wiz-api-credentials
+              key: client-id
+              optional: true
+        - name: WIZ_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: wiz-api-credentials
+              key: client-secret
+              optional: true
+        # Platform-specific Action Catalog Item IDs
+        # Update these with the actual Custom Action IDs from the Wiz Catalog
+        - name: WIZ_ACTION_AWS_ID
+          value: "rem-custom-0007" # AWS Outpost Runner ID (or actual Action ID)
+        - name: WIZ_ACTION_GCP_ID
+          value: ""
+        - name: WIZ_ACTION_AZURE_ID
+          value: ""
+        - name: WIZ_API_URL
+          value: "https://api.us.wiz.io/graphql" # Update if different region
+        - name: PORTAL_TOKEN
+          value: "super-secret-token" # Token for webhook auth and login
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        volumeMounts:
+        - name: code-volume
+          mountPath: /app
+        - name: data-volume
+          mountPath: /data
+      volumes:
+      - name: code-volume
+        configMap:
+          name: remediation-portal-code
+      - name: data-volume
+        emptyDir: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: remediation-portal
+  namespace: wiz-remediation
+spec:
+  selector:
+    app: remediation-portal
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080

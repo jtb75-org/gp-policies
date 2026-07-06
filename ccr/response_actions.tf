@@ -135,7 +135,7 @@ resource "wiz_response_action_catalog_item" "quarantine_s3_malware" {
   ]
 
   targets {
-    graph_entity_native_type = ["bucket"]
+    graph_entity_native_type = ["bucket", "object", "bucket_object", "MALWARE_INSTANCE", "malware_instance", "file", "s3_object"]
   }
 
   file_upload = wiz_file_upload.quarantine_s3_malware.id
