@@ -116,6 +116,7 @@ resource "wiz_response_action_catalog_item" "quarantine_s3_malware" {
   cloud_platform = "AWS"
 
   cloud_provider_permissions = [
+    "s3:ListAllMyBuckets",
     "s3:GetObject",
     "s3:GetObjectVersion",
     "s3:DeleteObject",
