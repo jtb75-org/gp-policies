@@ -4,7 +4,7 @@
 
 resource "wiz_remediation_and_response_deployment_v2" "main" {
   name                 = "${var.prefix} Remediation"
-  resource_name_prefix = "Wiz"
+  resource_name_prefix = var.prefix
 
   config {
     aws {
