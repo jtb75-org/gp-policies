@@ -99,6 +99,27 @@ resource "wiz_remediation_and_response_deployment_v2" "main" {
         graph_entity_native_type = "MALWARE_INSTANCE"
       }
     }
+    deployed_response_action_instance_configs {
+      status        = "ENABLED"
+      is_disruptive = true
+      target {
+        graph_entity_native_type = "bucket_object"
+      }
+    }
+    deployed_response_action_instance_configs {
+      status        = "ENABLED"
+      is_disruptive = true
+      target {
+        graph_entity_native_type = "s3_object"
+      }
+    }
+    deployed_response_action_instance_configs {
+      status        = "ENABLED"
+      is_disruptive = true
+      target {
+        graph_entity_native_type = "object"
+      }
+    }
   }
 }
 
