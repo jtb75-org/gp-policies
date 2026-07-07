@@ -3,9 +3,13 @@ name: CCR - Cloud Configuration Rules
 on:
   push:
     branches: [main]
-    paths: ['ccr/**']
+    paths:
+      - 'ccr/**'
+      - 'remediation-infra/custom-actions/**'
   pull_request:
-    paths: ['ccr/**']
+    paths:
+      - 'ccr/**'
+      - 'remediation-infra/custom-actions/**'
   workflow_dispatch:
     inputs:
       action:
