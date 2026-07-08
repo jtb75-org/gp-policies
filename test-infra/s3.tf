@@ -129,3 +129,67 @@ resource "aws_s3_object" "malware_file_4" {
   key     = "eicar_test_4.txt"
   content = "X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*"
 }
+
+resource "aws_s3_object" "malware_file_5" {
+  bucket  = aws_s3_bucket.test_malware.id
+  key     = "eicar_test_5.txt"
+  content = "X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*"
+}
+
+# --- Malware Testing Bucket 2 ---
+resource "aws_s3_bucket" "test_malware_2" {
+  bucket        = "${var.prefix}-test-malware-2-${data.aws_caller_identity.current.account_id}"
+  force_destroy = true
+  tags = {
+    Purpose = "test-malware"
+  }
+}
+
+resource "aws_s3_bucket_versioning" "test_malware_2" {
+  bucket = aws_s3_bucket.test_malware_2.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+resource "aws_s3_object" "malware_file_6" {
+  bucket  = aws_s3_bucket.test_malware_2.id
+  key     = "eicar_test_6.txt"
+  content = "X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*"
+}
+
+resource "aws_s3_object" "malware_file_7" {
+  bucket  = aws_s3_bucket.test_malware_2.id
+  key     = "eicar_test_7.txt"
+  content = "X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*"
+}
+
+# --- Malware Testing Bucket 3 ---
+resource "aws_s3_bucket" "test_malware_3" {
+  bucket        = "${var.prefix}-test-malware-3-${data.aws_caller_identity.current.account_id}"
+  force_destroy = true
+  tags = {
+    Purpose = "test-malware"
+  }
+}
+
+resource "aws_s3_bucket_versioning" "test_malware_3" {
+  bucket = aws_s3_bucket.test_malware_3.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+resource "aws_s3_object" "malware_file_8" {
+  bucket  = aws_s3_bucket.test_malware_3.id
+  key     = "eicar_test_8.txt"
+  content = "X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*"
+}
+
+resource "aws_s3_object" "malware_file_9" {
+  bucket  = aws_s3_bucket.test_malware_3.id
+  key     = "eicar_test_9.txt"
+  content = "X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*"
+}
+
+
