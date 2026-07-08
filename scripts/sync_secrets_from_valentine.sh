@@ -3,7 +3,20 @@
 # Sync GitHub Secrets directly from Google Valentine (Password Manager)
 # =============================================================================
 
-VALENTINE_SECRET_NAME="jtb75-wiz-outpost-credentials"
+REPO_ROOT="/usr/local/google/home/joebuhr/repo/gp-policies"
+ENV_FILE="$REPO_ROOT/.env"
+
+# Check if .env file exists and extract the secret ID
+if [ -f "$ENV_FILE" ]; then
+    VALENTINE_SECRET_ID=$(grep -E "^VALENTINE_SECRET_ID=" "$ENV_FILE" | cut -d= -f2- | tr -d '"' | tr -d "'")
+fi
+
+if [ -z "$VALENTINE_SECRET_ID" ]; then
+    echo "Error: VALENTINE_SECRET_ID not found in $ENV_FILE"
+    echo "Please configure your .env file with:"
+    echo "VALENTINE_SECRET_ID=<your_16_digit_valentine_secret_id>"
+    exit 1
+fi
 
 # Check if valentine CLI is available
 VALENTINE_CLI="/google/bin/releases/valentine-cli/valentine"
@@ -44,17 +57,17 @@ if ! gcertstatus &> /dev/null; then
     gcert || exit 1
 fi
 
-echo "🔑 Fetching credentials from Valentine secret '$VALENTINE_SECRET_NAME'..."
-SECRET_JSON=$($VALENTINE_CMD secret get "$VALENTINE_SECRET_NAME" --raw 2>/dev/null)
+echo "🔑 Fetching credentials from Valentine secret ID '$VALENTINE_SECRET_ID'..."
+SECRET_JSON=$($VALENTINE_CMD secret get "$VALENTINE_SECRET_ID" --raw 2>/dev/null)
 
 if [ -z "$SECRET_JSON" ]; then
-    echo "Error: Failed to retrieve secret from Valentine. Make sure you created a secret named '$VALENTINE_SECRET_NAME' containing a JSON block."
+    echo "Error: Failed to retrieve secret from Valentine. Make sure you provided the correct 16-digit secret ID in .env and that your gcert is active."
     exit 1
 fi
 
 # Validate JSON structure
 if ! echo "$SECRET_JSON" | jq empty 2>/dev/null; then
-    echo "Error: Secret content is not valid JSON."
+    echo "Error: Secret content retrieved from Valentine is not valid JSON."
     exit 1
 fi
 
