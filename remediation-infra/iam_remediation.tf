@@ -29,6 +29,7 @@ module "remediation_roles" {
       "iam:UpdateAccessKey"
     ],
     "rem-custom-0007" : [
+      "secretsmanager:GetSecretValue",
       "s3:ListAllMyBuckets",
       "s3:GetObject",
       "s3:GetObjectVersion",
