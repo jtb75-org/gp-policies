@@ -126,14 +126,7 @@ resource "wiz_response_action_catalog_item" "quarantine_s3_malware" {
     "s3:ListBucketVersions"
   ]
 
-  revertible = true
-
-  revert_cloud_provider_permissions = [
-    "s3:GetObject",
-    "s3:PutObject",
-    "s3:DeleteObject",
-    "s3:ListBucket"
-  ]
+  revertible = false
 
   targets {
     graph_entity_native_type = ["bucket", "object", "bucket_object", "MALWARE_INSTANCE", "malware_instance", "file", "s3_object"]
